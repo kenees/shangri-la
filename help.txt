@@ -1,0 +1,35 @@
+1. from flask_script import Manager
+2. flask_script  可接受命令行参数的脚本扩展库
+3. 命令
+    python index.py runserver
+4. help
+    python index.py runserver --help
+    -h host
+    -p port
+    --threaded   多线程
+    --processes
+    -d   debug
+    -D   nodebug
+    -r   reload
+    -R   noreload
+
+    python index.py runserver -h 0.0.0.0 -p 8080 -d -r
+
+5. 路由的管理
+    flask-blueprint
+    Blueprint
+
+6. 数据库
+    orm: 使用models映射mysql
+    SQLAlchemy
+    flask-SQLAlchemy
+    flask-migrate:      数据库迁移
+    1) python index.py db init (执行一次即可)
+    2) python index.py db migrate
+    3) python index.py db upgrade
+
+7. template
+render_template
+
+8. 部署
+执行命令输出引用包到requirements.txt中

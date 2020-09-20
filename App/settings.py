@@ -2,6 +2,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
 def get_db_uri(dbinfo):
     engine = dbinfo.get("ENGINE") or "sqlite"
     driver = dbinfo.get("DRIVER") or "sqlite"
@@ -13,12 +14,20 @@ def get_db_uri(dbinfo):
 
     return "{}+{}://{}:{}@{}:{}/{}".format(engine, driver, user, password, host, port, name)
 
+
 class Config:
     DEBUGE = False
 
     TESTING = False
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    SECRET_KEY = "Kenevy"
+
+    SESSION_TYPE = 'redis'      # 将 session存在redis中
+    # SESSION_REDIS = '127.0.0.1:6379'  # 可以连接远程redis库
+    SESSION_COOKIE_SECURE = True
+    SESSION_USE_SIGNER = True   # 将 key 加密
 
 
 class DevelopConfig(Config):

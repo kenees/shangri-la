@@ -19,7 +19,7 @@ password | varchar(20) | 不允许为空 | 密码
 create_at | datetime | 不允许为空 | 创建时间
 update_at | datetime | 不允许为空 | 更新时间
 authority | varchar(255) | 不允许为空 | 用户权限json串
-is_valid | boolen | 不允许为空  | 用户是否有效
+is_valid | boolean | 不允许为空  | 用户是否有效
 
 
 ### 1.3 blog_tag表
@@ -131,43 +131,3 @@ https://web.umeng.com/main.php?c=site&a=frame&siteid=1254552353#!/1600408387143/
           次数
            y/x 时间  00:00   01:00  02:00  ... 23:00
 pv, uv, vv, ip
-
-
-
-# 启动
-```
-1. from flask_script import Manager
-
-2. flask_script  可接受命令行参数的脚本扩展库
-
-3. 命令
-    python index.py runserver
-4. help
-    python index.py runserver --help
-    -h host
-    -p port
-    --threaded   多线程
-    --processes
-    -d   debug
-    -D   nodebug
-    -r   reload
-    -R   noreload
-
-    python index.py runserver -h 0.0.0.0 -p 8080 -d -r
-
-5. 路由的管理
-    flask-blueprint
-    Blueprint
-
-6. 数据库
-    orm: 使用models映射mysql
-    SQLAlchemy
-    flask-sqlalchemy
-    数据库迁移
-
-7. template
-render_template
-
-8. 部署
-执行命令输出引用包到requirements.txt中
-```
