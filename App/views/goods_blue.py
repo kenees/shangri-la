@@ -1,7 +1,7 @@
 import json
 import random
 from flask import Blueprint, redirect, url_for, request, abort, render_template, Response, session
-from App.model import User
+# from App.model import User
 from App.ext import models
 
 goods_blue = Blueprint('goods_blue', __name__)
@@ -71,19 +71,19 @@ def mine():
 @goods_blue.route('/addstudent/')
 def add_student():
 
-    user = User()
-    user.username = "小王%d" % random.randrange(10000)
-    user.save()
+    # user = User()
+    # user.username = "小王%d" % random.randrange(10000)
+    # user.save()
     return 'add success'
 
 # 添加一组数据
 @goods_blue.route('/addstudents/')
 def add_students():
     students = []
-    for i in range(5):
-        student = User()
-        student.username = '小天%d' % i
-        students.append(student)
+    # for i in range(5):
+    #     student = User()
+    #     student.username = '小天%d' % i
+    #     students.append(student)
 
     print(students)
     models.session.add_all(students)
@@ -100,26 +100,28 @@ def get_student():
     # student = User.query.get_or_404(2)
     # return student.username
 
-    student = User.query.get(4)
+    # student = User.query.get(4)
     # return student.username
-    return json.dumps(student)
+    # return json.dumps(student)
+
+    return ''
 
 # 查询所有
 @goods_blue.route('/get_all_student/')
 def get_all_students():
 
-    students = User.query.all()
-    print(students)
+    # students = User.query.all()
+    # print(students)
     return 'get all students success'
 
 
 # 删除数据
 @goods_blue.route('/delete_student/')
 def delete_student():
-    student = User.query.first()
-
-    models.session.delete(student)
-    models.session.commit()
+    # student = User.query.first()
+    #
+    # models.session.delete(student)
+    # models.session.commit()
 
     return 'delete success'
 
@@ -127,10 +129,10 @@ def delete_student():
 # 更新数据
 @goods_blue.route('/update_student/')
 def update_student():
-    student = User.query.first()
-    student.username = '沙箱'
-    models.session.add(student)
-    models.session.commit()
+    # student = User.query.first()
+    # student.username = '沙箱'
+    # models.session.add(student)
+    # models.session.commit()
 
     return 'update success'
 
