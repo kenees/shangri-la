@@ -49,7 +49,7 @@ comment_number | int |    | 评论数量
 参考： https://blog.csdn.net/weixin_43681537/article/details/86080074
 ```
 
-### 1.5 评论表
+### 1.5 comment表
 名称 | 类型 | 约束条件 | 说明
 -|:-:|:-:|-:
 comment_id | int | 唯一 | 主键，评论id
@@ -58,16 +58,17 @@ content | varchar(255) | 不允许为空 | 评论内容
 from_uid | int | 不允许为空 | 评论用户id
 comment_date | datetime | 不允许为空 | 评论时间
 
-### 1.6 回复表
+### 1.6 reply表
 名称 | 类型 | 约束条件 | 说明
 -|:-:|:-:|-:
-id | int | 主键 | 回复id
+reply_id | int | 主键 | 回复id
 comment_id | int | 唯一 | 回复评论的id
 content | varchar(255) | 不允许为空 | 评论内容
+from_uid | int | 不允许为空 | 评论用户id
 comment_date | datetime | 不允许为空 | 评论时间
 
 
-### 1.7 blog访问用户
+### 1.7 blog_visit访问用户
 名称 | 类型 | 约束条件 | 说明
 -|:-:|:-:|-:
 uid | int | 主键 | 访问用户id
@@ -82,7 +83,7 @@ access_rights | boolean | 不允许为空 | 访问权限
 
 
 
-### 1.8 统计表
+### 1.8 Statistics 统计表
 名称 | 类型 | 约束条件 | 说明
 -|:-:|:-:|-:
 id | int | 主键 | id
