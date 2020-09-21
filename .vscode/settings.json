@@ -13,5 +13,6 @@
       "username": "db_user",
       "password": "eSD2mmrj6kHGRA8Y"
     }
-  ]
+  ],
+  "python.pythonPath": "/Users/yogo/Evenv/vv/bin/python"
 }
