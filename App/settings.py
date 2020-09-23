@@ -27,6 +27,7 @@ class Config:
     SESSION_TYPE = 'redis'      # 将 session存在redis中
     # SESSION_REDIS = '127.0.0.1:6379'  # 可以连接远程redis库
     SESSION_COOKIE_SECURE = True
+
     SESSION_USE_SIGNER = True   # 将 key 加密
 
 
@@ -43,6 +44,17 @@ class DevelopConfig(Config):
         "NAME": "db_user",
 
     }
+
+    # 发送邮件的配置
+    MAIL_SERVER = "smtp.163.com"
+
+    MAIL_PORT = 25
+
+    MAIL_USERNAME = "17621969165@163.com"
+
+    MAIL_PASSWORD = "USMPTZEAVKEUIQVI"
+
+    MAIL_DEFAULT_SENDER = MAIL_USERNAME
 
     SQLALCHEMY_DATABASE_URI = get_db_uri(dbinfo)
 
