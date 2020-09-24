@@ -1,8 +1,8 @@
 from flask import Flask
+from App.api import init_api
 from App.ext import init_ext
 from App.middleware import load_middleware
 from App.settings import envs
-from App.views import init_view
 
 
 def create_app(env):
@@ -13,8 +13,8 @@ def create_app(env):
 
     init_ext(app)
 
-    init_view(app)
+    init_api(app)
 
-    # load_middleware(app)
+    load_middleware(app)
 
     return app
