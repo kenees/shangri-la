@@ -1,0 +1,11 @@
+
+# production
+/.vscode
+/.idea
+
+
+# misc
+.idea
+.vscode
+.DS_Store
+*.zip

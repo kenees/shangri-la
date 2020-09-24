@@ -1,7 +1,4 @@
-import time
-
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from App.ext import models
 
 
@@ -11,7 +8,7 @@ class SystemUser(models.Model):
     user_avatar = models.Column(models.String(255), default='')
     _password = models.Column(models.String(255), nullable=False)
     create_at = models.Column(models.Integer)
-    update_at = models.Column(models.Integer, default=int(time.time()))
+    update_at = models.Column(models.Integer, default=create_at)
     authority = models.Column(models.String(255), default='{}')
     is_valid = models.Column(models.Boolean, default=True)
 
