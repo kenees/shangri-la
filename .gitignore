@@ -2,7 +2,7 @@
 # production
 /.vscode
 /.idea
-
+/migrations
 
 # misc
 .idea
