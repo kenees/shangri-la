@@ -1,7 +1,7 @@
 import time
 
 from flask import request
-from flask_restful import Resource, fields, marshal_with
+from flask_restful import Resource, fields, marshal_with, marshal
 
 from App.models import BlogTag
 
@@ -37,26 +37,41 @@ class Tags(Resource):
 
         date = request.json
         if date is None or date.get("tag_id") is None:
-            return {"msg": "参数错误"}
+            return {
+                "remark": "tag_id不能为空",
+                "success": False,
+            }
 
         tag = BlogTag.query.get_or_404(date.get("tag_id"))
         print('tag', tag)
-        if tag is None:
-            return {"msg": "tag不存在"}
+        if not tag:
+            return {
+                "remark": "标签不存在",
+                "success": False,
+            }
 
         tag_name = date.get('tag_name')
         default_color = date.get("default_color")
         is_valid = date.get("is_valid")
         print(tag_name, default_color, is_valid)
         if tag_name is not None:
-            tag.update(tag_name=tag_name)
+            tag.tag_name = tag_name
         if default_color is not None:
-            tag.update(default_color=default_color)
+            tag.default_color = default_color
         if isinstance(is_valid, bool):
-            tag.update(is_valid=is_valid)
+            tag.is_valid = is_valid
 
-        tag.save()
-        return {"msg": "update tag success"}
+        if not tag.save():
+            return {
+                "remark": "更新失败",
+                "success": False,
+            }
+
+        return {
+            "remark": "更新成功",
+            "success": True,
+            "data": marshal(tag, tags_fields)
+        }
 
     def post(self):
 
@@ -77,3 +92,23 @@ class Tags(Resource):
         blog_tag.save()
 
         return {"msg": "create tag success"}
+
+    def delete(self, id):
+
+        tag = BlogTag.query.get_or_404(id)
+
+        if not tag:
+            return {
+                "remark": "tag is not found",
+                "success": False,
+            }
+        if not tag.delete():
+            return {
+                "remark": "delete error",
+                "success": False,
+            }
+
+        return {
+            "remark": "delete success",
+            "success": True,
+        }

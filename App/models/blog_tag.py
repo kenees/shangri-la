@@ -10,9 +10,24 @@ class BlogTag(models.Model):
     update_at = models.Column(models.Integer, default=create_at)
 
     def save(self):
-        models.session.add(self)
-        models.session.commit()
+        try:
+            models.session.add(self)
+            models.session.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
     #
     # def update_tag(tag, attr):
     #     tag.update(attr)
     #     models.session.commit()
+
+    def delete(self):
+        try:
+            models.session.delete(self)
+            models.session.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
