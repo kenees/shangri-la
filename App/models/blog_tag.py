@@ -12,3 +12,7 @@ class BlogTag(models.Model):
     def save(self):
         models.session.add(self)
         models.session.commit()
+    #
+    # def update_tag(tag, attr):
+    #     tag.update(attr)
+    #     models.session.commit()
