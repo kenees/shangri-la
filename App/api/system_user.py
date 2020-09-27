@@ -22,11 +22,33 @@ class UserRegister(Resource):
 class UserLogin(Resource):
 
     def post(self):
-        user_name = request.json.get('user_name')
-        password = request.json.get('password')
+        if request and request.json:
+            user_name = request.json.get('user_name')
+            password = request.json.get('password')
+            if not user_name:
+                return {
+                    "remark": "用户名为空",
+                    "success": False,
+                }, 400
+            if not password:
+                return {
+                    "remark": "密码为空",
+                    "success": False,
+                }, 400
+        else:
+            return {
+                "remark": "参数异常",
+                "success": False,
+            }, 400
 
         user = SystemUser.query.filter(SystemUser.user_name.__eq__(user_name)).first()
         if user and user.check_password(password):
-            return { "msg": "login success" }
+            return {
+                    "remark": "登录成功",
+                    "success": True,
+            }
 
-        return { "msg": "用户名或密码错误" }
+        return {
+            "remark": "用户名或密码错误",
+            "success": False,
+        }
