@@ -6,7 +6,7 @@ from flask_restful import Resource, fields, marshal_with, marshal
 from App.models import BlogTag
 
 tags_fields = {
-    "id": fields.Integer(attribute='tag_id'),
+    "tag_id": fields.Integer,
     "tag_name": fields.String,
     "default_color": fields.String,
     "is_valid": fields.Boolean(default=True),
@@ -17,20 +17,27 @@ tags_fields = {
 single_list_fields = {
     "remark": fields.String,
     "success": fields.Boolean,
-    "data": fields.Nested(tags_fields)
+    "data": {
+        "length": fields.Integer,
+        "tag_list":  fields.Nested(tags_fields),
+    }
 }
 
 
 class Tags(Resource):
 
-    @marshal_with(single_list_fields)
     def get(self):
         tag_list = BlogTag.query.all()
+        length = len(tag_list)
         print('tag_list', tag_list)
+        print(length)
         return {
             "remark": "get success",
             "success": True,
-            "data": tag_list,
+            "data": {
+                "length": length,
+                "tag_list": marshal(tag_list, tags_fields),
+            },
         }
 
     def put(self):
@@ -75,12 +82,16 @@ class Tags(Resource):
 
     def post(self):
 
-        date = request.json
-        if date is None or date.get('tag_name') is None:
-            return {"msg": "标签名不能为空"}
+        data = request.json
+        if request and data:
+            if data.get('tag_name') is None:
+                return {
+                    "remark": "标签名不能为空",
+                    "success": False,
+                }
 
-        tag_name = date.get('tag_name')
-        default_color = date.get("default_color")
+        tag_name = data.get('tag_name')
+        default_color = data.get("default_color")
 
         blog_tag = BlogTag()
         blog_tag.tag_name = tag_name
@@ -89,9 +100,16 @@ class Tags(Resource):
         if default_color is not None:
             blog_tag.default_color = default_color
 
-        blog_tag.save()
+        if not blog_tag.save():
+            return {
+                "remark": "创建失败",
+                "success": False,
+            }
 
-        return {"msg": "create tag success"}
+        return {
+            "remark": "创建成功",
+            "success": True,
+        }
 
     def delete(self, id):
 

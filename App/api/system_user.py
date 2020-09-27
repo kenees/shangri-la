@@ -1,7 +1,15 @@
 import time
 from flask import request
-from flask_restful import Resource
+from flask_restful import Resource, fields, marshal
 from App.models import SystemUser
+
+
+user_fields = {
+    "user_id": fields.Integer(),
+    "user_avatar": fields.String,
+    "user_name": fields.String,
+    "authority": fields.String,
+}
 
 
 class UserRegister(Resource):
@@ -46,6 +54,9 @@ class UserLogin(Resource):
             return {
                     "remark": "登录成功",
                     "success": True,
+                    "data": {
+                        "user_info": marshal(user, user_fields)
+                    }
             }
 
         return {
