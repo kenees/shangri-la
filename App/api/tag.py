@@ -14,15 +14,6 @@ tags_fields = {
     "update_at": fields.Integer,
 }
 
-single_list_fields = {
-    "remark": fields.String,
-    "success": fields.Boolean,
-    "data": {
-        "length": fields.Integer,
-        "tag_list":  fields.Nested(tags_fields),
-    }
-}
-
 
 class Tags(Resource):
 

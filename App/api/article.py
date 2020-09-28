@@ -16,23 +16,20 @@ article_fields = {
     "comment_number": fields.Integer,
 }
 
-single_list_fields = {
-    "remark": fields.String,
-    "success": fields.Boolean,
-    "data": fields.Nested(article_fields)
-}
-
 
 class ArticleResource(Resource):
 
-    @marshal_with(single_list_fields)
     def get(self):
         article_list = Article.query.all()
+        length = len(article_list)
         print('article_list', article_list)
         return {
             "remark": "get success",
             "success": True,
-            "data": article_list,
+            "data": {
+                "total": length,
+                "article_list": marshal(article_list, article_fields),
+            }
         }
 
     def put(self):
