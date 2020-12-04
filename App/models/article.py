@@ -6,6 +6,7 @@ class Article(models.Model):
     article_name = models.Column(models.String(255))
     article_content = models.Column(models.Text)
     article_tag = models.Column(models.String(255))
+    is_valid = models.Column(models.Boolean, default=True)
     create_at = models.Column(models.Integer)
     update_at = models.Column(models.Integer, default=create_at)
     reading_number = models.Column(models.Integer, default=0)

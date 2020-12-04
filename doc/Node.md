@@ -74,3 +74,41 @@
                 - default
                 - 指定默认值， 值传递使用传进来的值
                 - 未传递， 则使用默认
+                
+          - fields
+            - Raw
+                - format
+                - output
+                - 调用顺序
+                    - 将数据传递进格式化工具的时候， 先获取值output
+                    - 再对值进行格式化 format
+            - String
+                - 继承 Raw
+                - 将value进行格式化
+                - 转化成兼容格式text
+           - Interger
+                - 继承自Raw
+                - 重写了初始化， 将default设置为0
+                - 重写格式化，将value转换成int
+           - Boolean
+                - 继承自Raw
+                - 重写格式化，将value转换成boolean
+                
+                
+   - RequestParser
+       - 使用过程
+         - 先定义一个RequestParser对象    parser = reqparse.RequestParser()
+         - 向对象中添加字段               parser.add_argument("tag_name")
+         - 从对象中获取字段
+       - 对象在添加参数的时候，可以实现数据预校验
+         - 参数名字
+         - 参数是否必须           parser.add_argument("tag_name"， required=True)
+         - 数据的类型             parser.add_argument("tag_name", type=str)
+         - 还可以设置错误的提示       parser.add_argument("tag_name", help='错误信息')
+         - 接受多个值  parser.add_argument("tag_name"， action="append")
+         - 也可以在接受的时候指定别名 parser.add_argument("tag_name"， dest='别名')
+         - 可以指定接受参数的位置  parser.add_argument("tag_name", location=['form', 'cookies','args', 'headers'])
+        
+       - copy
+            parser_copy = parser.copy()
+            parser_copy.add_argument('create_at')

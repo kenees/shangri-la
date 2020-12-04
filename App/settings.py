@@ -38,11 +38,10 @@ class DevelopConfig(Config):
         "ENGINE": "mysql",
         "DRIVER": "pymysql",
         "USER": "db_user",
-        "PASSWORD": "eSD2mmrj6kHGRA8Y",
-        "HOST": "122.51.240.250",
+        "PASSWORD": "AfP648RHPLHRtE4T",
+        "HOST": "121.4.51.142",
         "PORT": "3306",
         "NAME": "db_user",
-
     }
 
     # 发送邮件的配置
@@ -66,7 +65,7 @@ class TestConfig(Config):
         "ENGINE": "mysql",
         "DRIVER": "pymysql",
         "USER": "db_user",
-        "PASSWORD": "eSD2mmrj6kHGRA8Y",
+        "PASSWORD": "AfP648RHPLHRtE4T",
         "HOST": "localhost",
         "PORT": "3306",
         "NAME": "db_user",
@@ -82,7 +81,7 @@ class StagingConfig(Config):
         "ENGINE": "mysql",
         "DRIVER": "pymysql",
         "USER": "db_user",
-        "PASSWORD": "eSD2mmrj6kHGRA8Y",
+        "PASSWORD": "AfP648RHPLHRtE4T",
         "HOST": "localhost",
         "PORT": "3306",
         "NAME": "db_user",
@@ -98,7 +97,7 @@ class ProductConfig(Config):
         "ENGINE": "mysql",
         "DRIVER": "pymysql",
         "USER": "db_user",
-        "PASSWORD": "eSD2mmrj6kHGRA8Y",
+        "PASSWORD": "AfP648RHPLHRtE4T",
         "HOST": "localhost",
         "PORT": "3306",
         "NAME": "db_user",

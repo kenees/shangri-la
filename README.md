@@ -37,7 +37,7 @@ update_at | datetime | 不允许为空 | 更新时间
 -|:-:|:-:|-:
 article_id | int | 唯一 | 主键 文章id
 article_name | varchar(255) | 不允许为空 | 博客标题
-article_tag | varchar(255) | | 博客标签 将[tag_id]转成字符串存储
+article_tag | varchar(255) | | 博客标签 关联到blog_tag上
 create_at | datetime | 不允许为空 | 创建时间
 update_at | datetime | 不允许为空 | 更新时间
 reading_number | int | 不允许为空 | 阅读量

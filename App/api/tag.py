@@ -1,7 +1,7 @@
 import time
 
 from flask import request
-from flask_restful import Resource, fields, marshal_with, marshal
+from flask_restful import Resource, fields, marshal, reqparse
 
 from App.models import BlogTag
 
@@ -14,14 +14,29 @@ tags_fields = {
     "update_at": fields.Integer,
 }
 
+# 输入过滤
+parser = reqparse.RequestParser()
+parser.add_argument("tag_id", type=int, required=False)
+parser.add_argument("tag_name")
+
 
 class Tags(Resource):
 
     def get(self):
-        tag_list = BlogTag.query.all()
+
+        args = parser.parse_args()
+        tag_id = args.get("tag_id")
+        tag_name = args.get("tag_name")
+
+        if not tag_id and not tag_name:
+            tag_list = BlogTag.query.all()
+        elif tag_id:
+            tag_list = BlogTag.query.filter(BlogTag.tag_id == tag_id).filter(BlogTag.tag_name.contains(tag_name)).all()
+        else:
+            tag_list = BlogTag.query.filter(BlogTag.tag_name.contains(tag_name)).all()
+
         length = len(tag_list)
         print('tag_list', tag_list)
-        print(length)
         return {
             "remark": "get success",
             "success": True,
@@ -33,14 +48,14 @@ class Tags(Resource):
 
     def put(self):
 
-        date = request.json
-        if date is None or date.get("tag_id") is None:
+        data = request.json
+        if data is None or data.get("tag_id") is None:
             return {
                 "remark": "tag_id不能为空",
                 "success": False,
             }
 
-        tag = BlogTag.query.get_or_404(date.get("tag_id"))
+        tag = BlogTag.query.get_or_404(data.get("tag_id"))
         print('tag', tag)
         if not tag:
             return {
@@ -48,9 +63,9 @@ class Tags(Resource):
                 "success": False,
             }
 
-        tag_name = date.get('tag_name')
-        default_color = date.get("default_color")
-        is_valid = date.get("is_valid")
+        tag_name = data.get('tag_name')
+        default_color = data.get("default_color")
+        is_valid = data.get("is_valid")
         print(tag_name, default_color, is_valid)
         if tag_name is not None:
             tag.tag_name = tag_name
@@ -58,6 +73,8 @@ class Tags(Resource):
             tag.default_color = default_color
         if isinstance(is_valid, bool):
             tag.is_valid = is_valid
+
+        tag.update_at = int(time.time())
 
         if not tag.save():
             return {
@@ -83,9 +100,11 @@ class Tags(Resource):
 
         tag_name = data.get('tag_name')
         default_color = data.get("default_color")
+        is_valid = data.get("is_valid")
 
         blog_tag = BlogTag()
         blog_tag.tag_name = tag_name
+        blog_tag.is_valid = is_valid
         blog_tag.create_at = int(time.time())
 
         if default_color is not None:
@@ -102,9 +121,16 @@ class Tags(Resource):
             "success": True,
         }
 
-    def delete(self, id):
+    def delete(self):
 
-        tag = BlogTag.query.get_or_404(id)
+        tag_id = request.args.get('tag_id')
+        if not tag_id:
+            return {
+                "remark": "tag_id is null",
+                "success": False,
+            }
+
+        tag = BlogTag.query.get_or_404(tag_id)
 
         if not tag:
             return {
@@ -121,3 +147,4 @@ class Tags(Resource):
             "remark": "delete success",
             "success": True,
         }
+
