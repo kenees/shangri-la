@@ -3,7 +3,8 @@ from App.ext import models
 
 class Article(models.Model):
     article_id = models.Column(models.Integer, primary_key=True)
-    article_name = models.Column(models.String(255))
+    article_title = models.Column(models.String(255))
+    article_describe = models.Column(models.Text)
     article_content = models.Column(models.Text)
     article_tag = models.Column(models.String(255))
     is_valid = models.Column(models.Boolean, default=True)

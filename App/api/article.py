@@ -1,12 +1,12 @@
 import time
 
-from flask import request
 from flask_restful import Resource, fields, reqparse, marshal
 from App.models import Article
 
 article_fields = {
     "article_id": fields.Integer,
-    "article_name": fields.String,
+    "article_title": fields.String,
+    "article_describe": fields.String,
     "article_content": fields.String,
     "article_tag": fields.String,
     "is_valid": fields.Boolean(default=True),
@@ -20,7 +20,8 @@ article_fields = {
 # 输入过滤
 parser = reqparse.RequestParser()
 parser.add_argument("article_id", required=False)
-parser.add_argument("article_name")
+parser.add_argument("article_title")
+parser.add_argument("article_describe")
 parser.add_argument("article_tag")
 parser.add_argument("article_content")
 parser.add_argument("start_time")
@@ -37,14 +38,14 @@ class ArticleResource(Resource):
     def get(self):
         args = parser.parse_args()
         article_id = args.get("article_id")
-        article_name = args.get("article_name")
+        article_title = args.get("article_title")
         start_time = args.get("start_time") or 0
         end_time = args.get("end_time") or time.time()
 
         print('start_time', start_time)
         print('end_time', end_time)
 
-        if not article_id and not article_name:
+        if not article_id and not article_title:
             article_list = Article.query \
                 .filter(Article.update_at > start_time) \
                 .filter(Article.update_at < end_time) \
@@ -52,13 +53,13 @@ class ArticleResource(Resource):
         elif article_id:
             article_list = Article.query \
                 .filter(Article.article_id == article_id) \
-                .filter(Article.article_name.contains(article_name)) \
+                .filter(Article.article_title.contains(article_title)) \
                 .filter(Article.update_at > start_time) \
                 .filter(Article.update_at < end_time) \
                 .all()
         else:
             article_list = Article.query\
-                .filter(Article.article_name.contains(article_name)) \
+                .filter(Article.article_title.contains(article_title)) \
                 .filter(Article.update_at > start_time) \
                 .filter(Article.update_at < end_time) \
                 .all()
@@ -85,14 +86,17 @@ class ArticleResource(Resource):
                 "success": False,
             }
 
-        article_name = args.get('article_name')
+        article_title = args.get('article_title')
+        article_describe = args.get("article_describe")
         article_content = args.get('article_content')
         article_tag = args.get("article_tag")
         edit_user = args.get("edit_user")
         is_valid = args.get("is_valid")
-        print(article_name, article_tag, edit_user, is_valid, article_content)
-        if article_name is not None:
-            article.article_name = article_name
+        print(article_title, article_tag, edit_user, is_valid, article_content, article_describe)
+        if article_title is not None:
+            article.article_title = article_title
+        if article_describe is not None:
+            article.article_describe = article_describe
         if article_content is not None:
             article.article_content = article_content
         if article_tag is not None:
@@ -117,17 +121,20 @@ class ArticleResource(Resource):
 
     def post(self):
         args = parser.parse_args()
-        article_name = args.get('article_name')
+        article_title = args.get('article_title')
+        article_describe = args.get('article_describe')
         is_valid = args.get("is_valid")
         article_content = args.get("article_content")
         edit_user = args.get("edit_user")
         article_tag = args.get("article_tag")
 
         article = Article()
-        article.article_name = article_name
+        article.article_title = article_title
+        article.article_describe = article_describe
         article.article_content = article_content
         article.edit_user = edit_user
         article.is_valid = is_valid
+
         if article_tag is not None:
             article.article_tag = article_tag
         article.create_at = int(time.time())
