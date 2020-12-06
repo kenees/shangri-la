@@ -38,7 +38,7 @@ class ArticleResource(Resource):
     def get(self):
         args = parser.parse_args()
         article_id = args.get("article_id")
-        article_title = args.get("article_title")
+        article_title = args.get("article_title") or ''
         start_time = args.get("start_time") or 0
         end_time = args.get("end_time") or time.time()
 

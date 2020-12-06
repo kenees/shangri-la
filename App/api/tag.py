@@ -26,7 +26,7 @@ class Tags(Resource):
 
         args = parser.parse_args()
         tag_id = args.get("tag_id")
-        tag_name = args.get("tag_name")
+        tag_name = args.get("tag_name") or ''
 
         if not tag_id and not tag_name:
             tag_list = BlogTag.query.all()
