@@ -26,7 +26,7 @@ def check_token(fun):
     return wrapper
 
 
-def generate_token(prefix=None):
+def generate_token(prefix=''):
     token = prefix + uuid.uuid4().hex
     return token
 

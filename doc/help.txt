@@ -28,6 +28,10 @@
     2) python index.py db migrate
     3) python index.py db upgrade
 
+6.1 redis
+    1) 下载安装redis
+    2) 启动redis 
+
 7. template
 render_template
 

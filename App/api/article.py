@@ -2,6 +2,8 @@ import time
 
 from flask_restful import Resource, fields, reqparse, marshal
 from App.models import Article
+from App.utils import check_token
+
 
 article_fields = {
     "article_id": fields.Integer,
@@ -76,6 +78,7 @@ class ArticleResource(Resource):
             }
         }
 
+    @check_token
     def put(self):
         args = parser_put.parse_args()
         article = Article.query.get_or_404(args.get("article_id"))
@@ -119,6 +122,7 @@ class ArticleResource(Resource):
             "data": marshal(article, article_fields)
         }
 
+    @check_token
     def post(self):
         args = parser.parse_args()
         article_title = args.get('article_title')
@@ -151,6 +155,7 @@ class ArticleResource(Resource):
             "data": marshal(article, article_fields)
         }
 
+    @check_token
     def delete(self):
         args = parser_put.parse_args()
         article = Article.query.get_or_404(args.get("article_id"))

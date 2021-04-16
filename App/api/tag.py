@@ -4,6 +4,7 @@ from flask import request
 from flask_restful import Resource, fields, marshal, reqparse
 
 from App.models import BlogTag
+from App.utils import check_token
 
 tags_fields = {
     "tag_id": fields.Integer,
@@ -46,6 +47,7 @@ class Tags(Resource):
             },
         }
 
+    @check_token
     def put(self):
 
         data = request.json
@@ -88,6 +90,7 @@ class Tags(Resource):
             "data": marshal(tag, tags_fields)
         }
 
+    @check_token
     def post(self):
 
         data = request.json
@@ -121,6 +124,7 @@ class Tags(Resource):
             "success": True,
         }
 
+    @check_token
     def delete(self):
 
         tag_id = request.args.get('tag_id')

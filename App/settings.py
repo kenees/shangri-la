@@ -44,6 +44,8 @@ class DevelopConfig(Config):
         "NAME": "db_user",
     }
 
+    # SESSION_REDIS = "121.4.51.142:6379"  # 可以连接远程redis库
+
     # 发送邮件的配置
     MAIL_SERVER = "smtp.163.com"
 
