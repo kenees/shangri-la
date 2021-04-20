@@ -15,8 +15,7 @@ user_fields = {
 parser = reqparse.RequestParser()
 parser.add_argument("user_name")
 parser.add_argument("password")
-parser.add_argument("token")
-
+parser.add_argument("token", location="headers")
 
 class UserRegister(Resource):
 
@@ -50,6 +49,7 @@ class UserLogin(Resource):
         args = parser.parse_args()
         user_name = args.get('user_name')
         password = args.get('password')
+
         if not user_name:
             return {
                        "remark": "用户名为空",
@@ -63,12 +63,9 @@ class UserLogin(Resource):
 
         user = SystemUser.query.filter(SystemUser.user_name.__eq__(user_name)).first()
 
-        print(marshal(user, user_fields))
-
         if user and user.check_password(password):
             token = generate_token()
-            # session[token] = user.user_id
-            session.save(token, user.user_id, timeout=60*60*24*7)
+            session[token] = user.user_id
             return {
                 "remark": "登录成功",
                 "success": True,

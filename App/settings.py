@@ -1,4 +1,5 @@
 import os
+from redis import Redis
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,10 +26,14 @@ class Config:
     SECRET_KEY = "Kenevy"
 
     SESSION_TYPE = 'redis'      # 将 session存在redis中
-    # SESSION_REDIS = '127.0.0.1:6379'  # 可以连接远程redis库
-    SESSION_COOKIE_SECURE = True
+
+    SESSION_COOKIE_SECURE = False
 
     SESSION_USE_SIGNER = True   # 将 key 加密
+
+    # SESSION_KEY_PREFIX = ''
+
+    PERMANENT_SESSION_LIFETIME = 60 * 60 * 24 * 7 # session有效期
 
 
 class DevelopConfig(Config):
@@ -45,6 +50,7 @@ class DevelopConfig(Config):
     }
 
     # SESSION_REDIS = "121.4.51.142:6379"  # 可以连接远程redis库
+    SESSION_REDIS = Redis(host='127.0.0.1', port=6379)
 
     # 发送邮件的配置
     MAIL_SERVER = "smtp.163.com"

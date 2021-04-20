@@ -13,7 +13,7 @@
     -r   reload
     -R   noreload
 
-    python index.py runserver -h 0.0.0.0 -p 8080 -d -r
+    python index.py runserver -h 0.0.0.0 -p 5080 -d -r
 
 5. 路由的管理
     flask-blueprint
@@ -31,6 +31,7 @@
 6.1 redis
     1) 下载安装redis
     2) 启动redis 
+    3) 查询key
 
 7. template
 render_template

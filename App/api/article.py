@@ -30,6 +30,8 @@ parser.add_argument("start_time")
 parser.add_argument("end_time")
 parser.add_argument("edit_user")
 parser.add_argument("is_valid", type=bool)
+parser.add_argument("token", location="headers")
+
 
 parser_put = parser.copy()
 parser_put.add_argument("article_id", required=True)
@@ -37,6 +39,7 @@ parser_put.add_argument("article_id", required=True)
 
 class ArticleResource(Resource):
 
+    @check_token
     def get(self):
         args = parser.parse_args()
         article_id = args.get("article_id")

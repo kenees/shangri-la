@@ -23,6 +23,7 @@ parser.add_argument("tag_name")
 
 class Tags(Resource):
 
+    @check_token
     def get(self):
 
         args = parser.parse_args()
