@@ -39,7 +39,6 @@ parser_put.add_argument("article_id", required=True)
 
 class ArticleResource(Resource):
 
-    @check_token
     def get(self):
         args = parser.parse_args()
         article_id = args.get("article_id")
