@@ -53,7 +53,7 @@ comment_number | int |    | 评论数量
 名称 | 类型 | 约束条件 | 说明
 -|:-:|:-:|-:
 comment_id | int | 唯一 | 主键，评论id
-topic_id | int | 唯一 | 评论博客id
+topic_id | int | 唯一 | 评论博客id  (id = 0 为留言信息)
 content | varchar(255) | 不允许为空 | 评论内容
 from_uid | int | 不允许为空 | 评论用户id
 comment_date | datetime | 不允许为空 | 评论时间
